@@ -2,7 +2,7 @@
 """
 app.py — CLI dashboard for the secure exam-paper exchange system.
 
-Run this in two separate terminals (one per user) from the project root:
+Run this in two separ ate terminals (one per user) from the project root:
 
     python3 app.py
 
