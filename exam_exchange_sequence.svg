@@ -1,0 +1,85 @@
+<svg viewBox="0 0 860 820" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Sequence diagram of secure exam-paper exchange: one-time RSA-wrapped AES session-key exchange between Sender and Recipient over an untrusted Channel, followed by a repeatable loop of AES-GCM encrypted, RSA-PSS signed file transfers.">
+  <style>
+    text { font-family: ui-monospace, Menlo, Consolas, monospace; fill: currentColor; }
+    .lbl { font-family: -apple-system, Segoe UI, sans-serif; font-weight: 600; }
+    .small { font-size: 11px; }
+    .tiny { font-size: 10px; }
+  </style>
+
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="currentColor"/>
+    </marker>
+  </defs>
+
+  <!-- Actor labels (no boxes) -->
+  <g class="lbl small" text-anchor="middle">
+    <text x="120" y="34">Sender</text>
+    <text x="410" y="34">Channel</text>
+    <text x="700" y="34">Recipient</text>
+  </g>
+
+  <!-- The three dotted lifelines -->
+  <line x1="120" y1="44" x2="120" y2="800" stroke="currentColor" stroke-dasharray="4 4"/>
+  <line x1="410" y1="44" x2="410" y2="800" stroke="currentColor" stroke-dasharray="4 4"/>
+  <line x1="700" y1="44" x2="700" y2="800" stroke="currentColor" stroke-dasharray="4 4"/>
+
+  <!-- Phase 1 divider -->
+  <text x="430" y="64" text-anchor="middle" class="lbl small">Phase 1 — Session Key Exchange (once per session)</text>
+
+  <!-- S self-actions -->
+  <g class="small" text-anchor="end">
+    <text x="108" y="94" class="tiny">K ← Rand(256)</text>
+    <text x="108" y="118" class="tiny">EncK ← OAEP(Pub_R, K)</text>
+    <text x="108" y="142" class="tiny">Sig1 ← PSS(Pr_S, EncK‖sid)</text>
+  </g>
+
+  <!-- S -> Ch -->
+  <line x1="120" y1="168" x2="404" y2="168" stroke="currentColor" marker-end="url(#arrow)"/>
+  <text x="262" y="161" text-anchor="middle" class="small">{sid, EncK, Sig1}</text>
+
+  <!-- Ch -> R -->
+  <line x1="416" y1="196" x2="694" y2="196" stroke="currentColor" marker-end="url(#arrow)"/>
+  <text x="555" y="189" text-anchor="middle" class="small">{sid, EncK, Sig1}</text>
+  <text x="410" y="216" text-anchor="middle" class="tiny">(attacker may intercept / tamper)</text>
+
+  <!-- R self-actions -->
+  <g class="small" text-anchor="start">
+    <text x="712" y="248" class="tiny">Verify(Pub_S, Sig1) ?</text>
+    <text x="712" y="272" class="tiny">K ← OAEP⁻¹(Pr_R, EncK)</text>
+  </g>
+
+  <text x="430" y="310" text-anchor="middle" class="small lbl">✓ both sides now hold K, bound to sid</text>
+
+  <!-- Phase 2 divider -->
+  <text x="430" y="340" text-anchor="middle" class="lbl small">Phase 2 — File Transfer (repeatable)</text>
+  <text x="50" y="360" class="tiny lbl">loop  i = 1..n  ┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄</text>
+
+  <!-- S self-actions (loop) -->
+  <g class="small" text-anchor="end">
+    <text x="108" y="386" class="tiny">N_i ← Rand(96)</text>
+    <text x="108" y="408" class="tiny">(C_i, T_i) ← AESGCM(K, N_i, M_i)</text>
+    <text x="108" y="430" class="tiny">P_i = {sid, i, N_i, C_i, T_i}</text>
+    <text x="108" y="452" class="tiny">Sig_i ← PSS(Pr_S, P_i)</text>
+  </g>
+
+  <!-- S -> Ch -->
+  <line x1="120" y1="474" x2="404" y2="474" stroke="currentColor" marker-end="url(#arrow)"/>
+  <text x="262" y="467" text-anchor="middle" class="small">{P_i, Sig_i}</text>
+
+  <!-- Ch -> R -->
+  <line x1="416" y1="502" x2="694" y2="502" stroke="currentColor" marker-end="url(#arrow)"/>
+  <text x="555" y="495" text-anchor="middle" class="small">{P_i, Sig_i}</text>
+  <text x="410" y="522" text-anchor="middle" class="tiny">(attacker may read / modify / replace)</text>
+
+  <!-- R self-actions (loop) -->
+  <g class="small" text-anchor="start">
+    <text x="712" y="554" class="tiny">Verify(Pub_S, Sig_i) ?</text>
+    <text x="712" y="578" class="tiny">AESGCM⁻¹(K, N_i, C_i, T_i) ?</text>
+    <text x="712" y="602" class="tiny lbl">pass → release M_i</text>
+    <text x="712" y="622" class="tiny lbl">fail  → ⊥ (abort)</text>
+  </g>
+
+  <text x="50" y="650" class="tiny lbl">┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄</text>
+  <text x="430" y="674" text-anchor="middle" class="small">repeat for next file, same K, fresh N_i, i ← i+1</text>
+</svg>
