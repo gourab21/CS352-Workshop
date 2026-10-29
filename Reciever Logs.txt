@@ -1,0 +1,122 @@
+PS D:\WEBSITE\Workshop> python app.py
+Secure Exam-Paper Exchange
+
+1. Register
+2. Login
+3. Exit
+Choice: 1
+
+--- Create a new user ---
+Choose a username: gd
+Choose a password:
+Confirm password:
+User 'gd' created — RSA-3072 keypair generated and stored.
+
+1. Register
+2. Login
+3. Exit
+Choice: 2
+
+--- Login ---
+Username: sir
+Password:
+Welcome, sir.
+
+=== Dashboard: sir ===  active sessions with: (none)
+  1. Send
+  2. Receive (refresh inbox)
+  3. Logout
+
+
+
+
+
+
+
+Choice: 2
+
+1 pending item(s) in inbox:
+  1. from 'gd'  type=session_init  id=1793266970516_6c81165c
+Process which item? (number, or 0 to go back): 1
+
+Incoming SESSION REQUEST from 'gd'  (envelope 1793266970516_6c81165c)
+  [RECEIVED] SESSION-INIT package  (peer: gd)
+      sid        = 7b806a67ddca4864ac4b22e1ed4ebcb8
+      EncK       = 2116b3e416ff128b95ca…a01e8c1392a29ca36a56  (384 bytes)
+      signature  = 434882c7bb63385049f9…8c66b75ebcc577564685  (384 bytes)
+  Verify sender signature and accept this session key? [y/N]: y
+  --- Verification ---
+  Step 1: verify signature over {sid, EncK} using gd's public key.
+          -> PASSED: signature is valid, package is authentic and unmodified.
+  Step 2: unwrap EncK with our own RSA private key via RSA-OAEP(SHA-256).
+          -> PASSED: recovered K = 6d6abff52f0db8d65c95…e82e1f84ab54b388d31b  (32 bytes)
+  ACCEPTED. Session established with 'gd' (sid=7b806a67ddca4864ac4b22e1ed4ebcb8). K held in memory only.
+
+=== Dashboard: sir ===  active sessions with: gd
+  1. Send
+  2. Receive (refresh inbox)
+  3. Logout
+
+
+
+
+
+
+
+Choice: 2
+Inbox empty (refreshed).
+
+=== Dashboard: sir ===  active sessions with: gd
+  1. Send
+  2. Receive (refresh inbox)
+  3. Logout
+
+
+
+
+
+
+
+Choice: 2
+
+1 pending item(s) in inbox:
+  1. from 'gd'  type=file  id=1793267003550_15b5e12a
+Process which item? (number, or 0 to go back): 1
+
+Incoming FILE from 'gd': 'Paper.pdf'  (envelope 1793267003550_15b5e12a)
+  [RECEIVED] FILE package  (peer: gd)
+      sid        = 7b806a67ddca4864ac4b22e1ed4ebcb8
+      seq (i)    = 1
+      nonce N_i  = df72b301d71739153adb…b301d71739153adb286d  (12 bytes)
+      ciphertext = 058cedfacf879b5ac363…b32b1b8c0571994b91eb  (3268741 bytes)
+      auth tag   = d6b2c0933737fc3053b5…fc3053b5bea3652358b7  (16 bytes)
+      metadata   = {'filename': 'Paper.pdf', 'sha256': '0ef562ec69e890fac283a6ac80c4b8b56f672d077d3014a9668e50840534ad74', 'sent_at': 1793267003.5225716}
+      signature  = 9040615c3fb5c97a60c4…d693f974d5785d290fbe  (384 bytes)
+  --- Verification ---
+  Step 1: verify signature over the full package P_1 = {sid, i, N_i, C_i, T_i, metadata} using gd's public key.
+          -> PASSED: signature is valid, package is authentic and unmodified.
+  Step 2: AES-256-GCM decrypt with session key K and nonce N_1, checking auth tag T_1.
+          -> PASSED: tag verified, plaintext recovered (3268741 bytes).
+  Plaintext M_1: 255044462d312e340a25…3636300a2525454f460a  (3268741 bytes)
+  Saved to: D:\WEBSITE\Workshop\users\sir\received\Paper.pdf
+  sha256 match (metadata=0ef562ec69e890fac283a6ac80c4b8b56f672d077d3014a9668e50840534ad74, computed=0ef562ec69e890fac283a6ac80c4b8b56f672d077d3014a9668e50840534ad74)
+
+=== Dashboard: sir ===  active sessions with: gd
+  1. Send
+  2. Receive (refresh inbox)
+  3. Logout
+
+
+
+
+
+
+
+Choice: 3
+Logging out 'sir'. All in-memory session keys for this run are discarded.
+
+1. Register
+2. Login
+3. Exit
+Choice: 3
+Bye.

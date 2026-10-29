@@ -1,0 +1,138 @@
+dows PowerShell
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+PS D:\WEBSITE\Workshop> python .\app.py
+Secure Exam-Paper Exchange
+
+1. Register
+2. Login
+3. Exit
+Choice: 1
+
+--- Create a new user ---
+Choose a username: sir
+Choose a password:
+Confirm password:
+User 'sir' created — RSA-3072 keypair generated and stored.
+
+1. Register
+2. Login
+3. Exit
+Choice: 2
+
+--- Login ---
+Username: gd
+Password:
+Welcome, gd.
+
+=== Dashboard: gd ===  active sessions with: (none)
+  1. Send
+  2. Receive (refresh inbox)
+  3. Logout
+
+
+
+
+
+
+
+Choice: 1
+
+Registered users:
+  1. sir
+Select recipient number (0 to cancel): 1
+
+--- sir ---
+  1. Establish secure session (generate + share AES session key)
+  2. Send document  (requires an active session)
+  0. Back
+Choice: 2
+No active session with 'sir' yet. Establish one first.
+
+=== Dashboard: gd ===  active sessions with: (none)
+  1. Send
+  2. Receive (refresh inbox)
+  3. Logout
+
+
+
+
+
+
+
+Choice: 1
+
+Registered users:
+  1. sir
+Select recipient number (0 to cancel): 1
+
+--- sir ---
+  1. Establish secure session (generate + share AES session key)
+  2. Send document  (requires an active session)
+  0. Back
+Choice: 1
+
+Generated fresh AES-256 session key K = 6d6abff52f0db8d65c95…e82e1f84ab54b388d31b  (32 bytes)
+Session established locally and session-key package SENT to 'sir':
+  [SENT] SESSION-INIT package  (peer: sir)
+      sid        = 7b806a67ddca4864ac4b22e1ed4ebcb8
+      EncK       = 2116b3e416ff128b95ca…a01e8c1392a29ca36a56  (384 bytes)
+      signature  = 434882c7bb63385049f9…8c66b75ebcc577564685  (384 bytes)
+  K is held only in memory for this run — never written to disk.
+  'sir' must Refresh and Accept it on their end before they can receive files.
+
+=== Dashboard: gd ===  active sessions with: sir
+  1. Send
+  2. Receive (refresh inbox)
+  3. Logout
+
+
+
+
+
+
+
+Choice: 1
+
+Registered users:
+  1. sir [session active]
+Select recipient number (0 to cancel): 1
+
+--- sir ---
+  1. Establish secure session (generate + share AES session key)
+  2. Send document
+  0. Back
+Choice: 2
+Path to file to send: D:\WEBSITE\Workshop\Paper.pdf
+
+Plaintext M_1 ('Paper.pdf', 3268741 bytes): 255044462d312e340a25…3636300a2525454f460a  (3268741 bytes)
+File package SENT to 'sir':
+  [SENT] FILE package  (peer: sir)
+      sid        = 7b806a67ddca4864ac4b22e1ed4ebcb8
+      seq (i)    = 1
+      nonce N_i  = df72b301d71739153adb…b301d71739153adb286d  (12 bytes)
+      ciphertext = 058cedfacf879b5ac363…b32b1b8c0571994b91eb  (3268741 bytes)
+      auth tag   = d6b2c0933737fc3053b5…fc3053b5bea3652358b7  (16 bytes)
+      metadata   = {'filename': 'Paper.pdf', 'sha256': '0ef562ec69e890fac283a6ac80c4b8b56f672d077d3014a9668e50840534ad74', 'sent_at': 1793267003.5225716}
+      signature  = 9040615c3fb5c97a60c4…d693f974d5785d290fbe  (384 bytes)
+
+=== Dashboard: gd ===  active sessions with: sir
+  1. Send
+  2. Receive (refresh inbox)
+  3. Logout
+
+
+
+
+
+
+
+Choice: 3
+Logging out 'gd'. All in-memory session keys for this run are discarded.
+
+1. Register
+2. Login
+3. Exit
+Choice: 3
+Bye.
+PS D:\WEBSITE\Workshop>
